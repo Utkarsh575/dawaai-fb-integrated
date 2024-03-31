@@ -27,12 +27,12 @@ struct InputFieldView: View {
               .fontWeight(.medium)
               .foregroundColor(Color.black)
               .multilineTextAlignment(.leading)
-              .padding(4)
+              .padding(.bottom,4)
               .background(Color("bgColor"))
             Spacer()
           }
-          .padding(.leading, 8)
-          .offset(CGSize(width: 0, height: -20))
+          .padding(.leading, 18)
+          .offset(CGSize(width: 0, height: -25))
         }.padding(4)
     }
 }

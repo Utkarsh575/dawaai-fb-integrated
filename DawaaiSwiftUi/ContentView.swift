@@ -133,24 +133,49 @@ class FirestoreManager : ObservableObject{
       return intervalSinceDose >= 0 && intervalSinceDose <= 60 * 6 // Check within 6 minutes of next dose time
     }
 
+//    private func scheduleNotification(for medicine: Medicine) {
+//      let content = UNMutableNotificationContent()
+//      content.title = "It's time to take your \(medicine.name)!"
+//      content.body = medicine.name
+//
+//      let calendar = Calendar.current
+//      let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: medicine.nextDoseTime)
+//      let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+//      let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//
+//      UNUserNotificationCenter.current().add(request) { (error) in
+//        if let error = error {
+//          print("Error scheduling notification:", error.localizedDescription)
+//        } else {
+//          print("Scheduled notification for \(medicine.name)")
+//        }
+//      }
+//    }
     private func scheduleNotification(for medicine: Medicine) {
-      let content = UNMutableNotificationContent()
-      content.title = "It's time to take your \(medicine.name)!"
-      content.body = medicine.name
-
-      let calendar = Calendar.current
-      let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: medicine.nextDoseTime)
-      let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-      let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-      UNUserNotificationCenter.current().add(request) { (error) in
-        if let error = error {
-          print("Error scheduling notification:", error.localizedDescription)
-        } else {
-          print("Scheduled notification for \(medicine.name)")
+        // Create notification content
+        let content = UNMutableNotificationContent()
+        content.title = "It's time to take your \(medicine.name)!"
+        content.body = medicine.name
+        content.userInfo = ["medicineID": medicine.id] // Attach medicine ID
+        
+        // Create notification trigger
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: medicine.nextDoseTime)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        
+        // Create notification request
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        // Schedule notification
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification:", error.localizedDescription)
+            } else {
+                print("Scheduled notification for \(medicine.name)")
+            }
         }
-      }
     }
+
 
     
     func fetchMedicines (){

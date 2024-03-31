@@ -29,7 +29,7 @@ struct HomeView: View {
         VStack {
           Text("DAWAAI").font(.title).bold().padding(.trailing, 225)
           NavigationLink {
-            ProfileView()
+            ProfileView().toolbar(.hidden, for: .tabBar)
           } label: {
             HStack {
               VStack {
@@ -41,7 +41,7 @@ struct HomeView: View {
           }
 
           Text("Your Meds for today").font(.system(size: 22, weight: .bold)).padding(.trailing, 140)
-          DatePicker("", selection: $selectedDate, displayedComponents: .date).padding(.top, -46).padding(.trailing, 17)
+          DatePicker("", selection: $selectedDate, displayedComponents: .date).padding(.top, -40).padding(.trailing, 17)
 
           PlanpickerView(selectedDate: $selectedDate)
 
@@ -145,7 +145,7 @@ struct PlanpickerView : View {
 
             
             VStack{
-                Text("Mon").bold().padding(.top,10)
+                Text("Tue").bold().padding(.top,10)
                 Text("\(String(dayToday))").font(.system(size: 45))
                 Text("5 meds").padding(.bottom,10)
                 
@@ -157,7 +157,7 @@ struct PlanpickerView : View {
 
             
             VStack{
-                Text("Mon").bold().padding(.top,10)
+                Text("Wed").bold().padding(.top,10)
                 Text("\(getNextDateDay(date: Date()))").font(.system(size: 45))
                 Text("3 meds").padding(.bottom,10)
                 
