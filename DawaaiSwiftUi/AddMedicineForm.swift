@@ -176,8 +176,10 @@ struct AddMedicineForm: View {
                 print("medicine data with image url: \(medicine)")
 
                 lmaoded.uploadData(newMed: medicine)
-                
-                
+                let a = FirestoreManager()
+                a.fetchMedicines()
+                self.presentationMode.wrappedValue.dismiss()
+
             } else {
                 print("Error uploading image")
             }
@@ -185,7 +187,6 @@ struct AddMedicineForm: View {
         }
         
         
-        self.presentationMode.wrappedValue.dismiss()
 
     }
     //    func loadImage() {

@@ -46,7 +46,9 @@ struct HomeView: View {
           PlanpickerView(selectedDate: $selectedDate)
 
           ScrollView {
-            ForEach(medicineCtas) { med in
+              ForEach(firestoreManager.fetchedMeds.filter({ medi in
+                  medi.expiryDate > Date()
+              })) { med in
               MedicineCta(medicine: med)
                 .onTapGesture {
                   selectedMedicine = med // Set selectedMedicine only on tap
@@ -58,7 +60,10 @@ struct HomeView: View {
             }
           }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).padding(10).padding(.horizontal, 10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).padding(10).padding(.horizontal, 10).onAppear{
+            firestoreManager.fetchMedicines()
+
+        }
       }
       .background(Color("bgColor"))
       .sheet(isPresented: $showingMedicineInfo) {
